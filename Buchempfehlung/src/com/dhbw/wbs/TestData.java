@@ -30,7 +30,7 @@ public class TestData
             if ((line = reader.readLine()) != null)
             {
                 //Alter, Geschlecht, Verheiratet, Kinderzahl, Abschluss, Beruf, Einkommen, Buch
-                data = line.split(",");
+                data = line.split(";");
             }
         }catch (IOException e)
         {
