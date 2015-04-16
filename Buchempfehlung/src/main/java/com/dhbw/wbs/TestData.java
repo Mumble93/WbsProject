@@ -9,6 +9,10 @@ public class TestData
     BufferedReader reader;
     String line;
 
+    /**
+     * Object to hold and distribute test data
+     * @param file The CSV file that holds the test data
+     */
     public TestData(String file)
     {
         try

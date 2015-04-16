@@ -11,5 +11,6 @@
 hs_err_pid*
 
 *.iml
-.idea/*
-out/*
+.idea/
+out/
+target/
