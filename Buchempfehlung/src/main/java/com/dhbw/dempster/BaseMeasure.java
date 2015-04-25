@@ -8,75 +8,66 @@ import java.util.Set;
 /**
  * Created by degele on 16.04.2015.
  */
-public class BaseMeasure<T extends Enum> {
+public class BaseMeasure<T extends Enum>
+{
     private Map<Set<T>, Double> focalAmount = new HashMap<Set<T>, Double>();
 
-    public BaseMeasure() {
+    public BaseMeasure()
+    {
 
     }
 
-    public Double get(Object key) {
+    public Double get(Object key)
+    {
         return focalAmount.get(key);
     }
 
-    public Set<Set<T>> keySet() {
+    public Set<Set<T>> keySet()
+    {
         return focalAmount.keySet();
     }
 
-    public void clear() {
+    public void clear()
+    {
         focalAmount.clear();
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(Object key)
+    {
         return focalAmount.containsKey(key);
     }
 
-    public Double remove(Object key) {
+    public Double remove(Object key)
+    {
         return focalAmount.remove(key);
     }
 
     /**
-     * Put a set and a measure to the BaseMeasure. The sum of measures in the BaseMeasure must not exceed 1
+     * Put a set and a measure to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1
+     *
      * @param set
      * @param measure
      */
-    public void put(Set<T> set, double measure) {
-        double total = measureSum() + measure;
-
-        if (focalAmount.containsKey(set)) {
-            double oldValue = focalAmount.get(set);
-            if (measure > oldValue && total > 1)
-                throw new IllegalArgumentException("Sum of measures must not exceed 1.00");
-        }
-        else {
-            if (total > 1)
-                throw new IllegalArgumentException("Sum of measures must not exceed 1.00");
-        }
+    public void put(Set<T> set, double measure)
+    {
         focalAmount.put(set, measure);
     }
 
-    /**
-     * Put a set to the BaseMeasure. The total sum of measures will be 1 afterwards
-     * @param set
-     */
-    public void put(Set<T> set) {
-        double total = measureSum();
-        double measure = 1 - total;
-        if (measure < 0)
-            throw new IllegalArgumentException("Sum of measures must not exceed 1.00");
+    public static <X extends Enum> BaseMeasure<X> combine(BaseMeasure<X> a, BaseMeasure<X> b)
+    {
+        BaseMeasure<X> result = new BaseMeasure<X>();
 
-        focalAmount.put(set, measure);
-    }
+        // Normalize measureSum to 1
+        // because double may cause rounding errors
+        a.normalize();
+        b.normalize();
 
-    public BaseMeasure<T> combine(BaseMeasure<T> other) {
-        BaseMeasure<T> a = this;
-        BaseMeasure<T> b = other;
-        BaseMeasure<T> result = new BaseMeasure<T>();
-
-
-        for (Set<T> outerSet : a.keySet()) {
-            for (Set<T> innerSet : b.keySet()) {
-                Set<T> mergedSet = new HashSet<T>(outerSet);
+        // Dempster Shafer
+        for (Set<X> outerSet : a.keySet())
+        {
+            for (Set<X> innerSet : b.keySet())
+            {
+                Set<X> mergedSet = new HashSet<X>(outerSet);
                 mergedSet.retainAll(innerSet);
 
                 double newMeasure = a.get(outerSet) * b.get(innerSet);
@@ -88,27 +79,41 @@ public class BaseMeasure<T extends Enum> {
             }
         }
 
-        Set<T> emptySet = new HashSet<T>();
-        if (result.containsKey(emptySet)) {
+        // Handle conflict
+        Set<X> emptySet = new HashSet<X>();
+        if (result.containsKey(emptySet))
+        {
             double k = result.get(emptySet);
             result.remove(emptySet);
             double factor = 1 / (1 - k);
 
-            for (Set<T> set : result.keySet()) {
+            for (Set<X> set : result.keySet())
+            {
                 double oldValue = result.get(set);
                 double newValue = oldValue * factor;
                 result.put(set, newValue);
             }
         }
 
-        return  result;
+        return result;
+    }
+
+    /**
+     * Normalize the sum of all elements to 1
+     */
+    public void normalize()
+    {
+        double currentSum = measureSum();
+        for (Set<T> set : this.keySet())
+            this.put(set, this.get(set) / currentSum);
     }
 
     /**
      * Calculate the current sum of the BaseMeasure
-     * @return
+     * @return sum of all elements
      */
-    public double measureSum() {
+    public double measureSum()
+    {
         double total = 0;
         for (Double d : focalAmount.values())
             total += d;
