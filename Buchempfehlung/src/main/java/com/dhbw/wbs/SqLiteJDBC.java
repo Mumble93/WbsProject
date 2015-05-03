@@ -24,6 +24,11 @@ public class SqLiteJDBC
         System.out.println("Opened database successfully");
     }
 
+    public Statement getStatement() throws SQLException
+    {
+        return connection.createStatement();
+    }
+
     public void createTestTable()
     {
         System.out.println("Preparing DB with test entries...");
