@@ -1,5 +1,9 @@
 package com.dhbw.wbs;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+
 public class Main
 {
 
@@ -7,19 +11,43 @@ public class Main
 
     public static void main(String[] args)
     {
-
         sqlite = new SqLiteJDBC();
 
-        if (args.length < 1)
+        if (args.length == 2)
         {
-            System.out.println("Must enter path to testfile");
-            System.exit(0);
+            if (args[0].equalsIgnoreCase("create_db"))
+            {
+                TestData testData = new TestData(args[1]);
+                sqlite.createTestTable();
+                sqlite.createTestTableData(testData);
+            }
+            else if (args[0].equalsIgnoreCase("recommend"))
+            {
+                try
+                {
+                    RecommendProcessor processor = new RecommendProcessor(args[1], args[1] + ".out");
+                    processor.process();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                printHelp();
+            }
         }
         else
         {
-            TestData testData = new TestData(args[0]);
-            //sqlite.createTestTable();
-            //sqlite.createTestTableData(testData);
+            printHelp();
         }
+
+    }
+
+    private static void printHelp()
+    {
+        System.out.println("Unrecognized arguments:\n operation path_to_csv\nSupported operations: create_db, recommend");
+        System.exit(1);
     }
 }
