@@ -10,14 +10,14 @@ import java.util.Set;
  */
 public class BaseMeasure<T extends Enum>
 {
-    private Map<Set<T>, Double> focalAmount = new HashMap<Set<T>, Double>();
+    private Map<Set<T>, Double> focalAmount = new HashMap<>();
 
     public BaseMeasure()
     {
 
     }
 
-    public Double get(Object key)
+    public Double get(Set<T> key)
     {
         return focalAmount.get(key);
     }
@@ -32,12 +32,12 @@ public class BaseMeasure<T extends Enum>
         focalAmount.clear();
     }
 
-    public boolean containsKey(Object key)
+    public boolean containsKey(Set<T> key)
     {
         return focalAmount.containsKey(key);
     }
 
-    public Double remove(Object key)
+    public Double remove(Set<T> key)
     {
         return focalAmount.remove(key);
     }
@@ -45,17 +45,24 @@ public class BaseMeasure<T extends Enum>
     /**
      * Put a set and a measure to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1
      *
-     * @param set
-     * @param measure
+     * @param set set
+     * @param measure measure
      */
     public void put(Set<T> set, double measure)
     {
         focalAmount.put(set, measure);
     }
 
+    /**
+     * Combine two BaseMeasures to an accumulated one
+     * @param a m_a
+     * @param b m_b
+     * @param <X> Type of enum
+     * @return combined BaseMeasure m_a + m_b
+     */
     public static <X extends Enum> BaseMeasure<X> combine(BaseMeasure<X> a, BaseMeasure<X> b)
     {
-        BaseMeasure<X> result = new BaseMeasure<X>();
+        BaseMeasure<X> result = new BaseMeasure<>();
 
         // Normalize measureSum to 1
         // because double may cause rounding errors
@@ -67,7 +74,7 @@ public class BaseMeasure<T extends Enum>
         {
             for (Set<X> innerSet : b.keySet())
             {
-                Set<X> mergedSet = new HashSet<X>(outerSet);
+                Set<X> mergedSet = new HashSet<>(outerSet);
                 mergedSet.retainAll(innerSet);
 
                 double newMeasure = a.get(outerSet) * b.get(innerSet);
@@ -80,10 +87,13 @@ public class BaseMeasure<T extends Enum>
         }
 
         // Handle conflict
-        Set<X> emptySet = new HashSet<X>();
+        Set<X> emptySet = new HashSet<>();
         if (result.containsKey(emptySet))
         {
             double k = result.get(emptySet);
+            if (k >= 1)
+                throw new ArithmeticException("k >= 1");
+
             result.remove(emptySet);
             double factor = 1 / (1 - k);
 
@@ -118,5 +128,50 @@ public class BaseMeasure<T extends Enum>
         for (Double d : focalAmount.values())
             total += d;
         return total;
+    }
+
+    /**
+     * Calculate belief of set x
+     * @param x set x
+     * @return belief of x
+     */
+    public double belief(Set<T> x)
+    {
+        normalize();
+
+        double sum = 0;
+        for (Set<T> y : focalAmount.keySet())
+        {
+            if(x.containsAll(y))
+            {
+                sum += this.get(y);
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Calculate plausibility of set x
+     * @param x set x
+     * @return plausibility of x
+     */
+    public double plausibility(Set<T> x)
+    {
+        normalize();
+
+        double sum = 0;
+
+        for (Set<T> y : focalAmount.keySet())
+        {
+            Set<T> mergedSet = new HashSet<>(x);
+            mergedSet.retainAll(y);
+
+            if (!mergedSet.isEmpty())
+            {
+                sum += this.get(y);
+            }
+        }
+
+        return sum;
     }
 }

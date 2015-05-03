@@ -64,7 +64,7 @@ public class BaseMeasureTest extends TestCase
         m.put(new HashSet<>(Arrays.asList(TestEnum.A, TestEnum.B)), 0.3);
         assertEquals(m.measureSum(), 0.3, DELTA);
 
-        m.put(new HashSet<>((List<TestEnum>) Collections.singletonList(TestEnum.C)), 0.3);
+        m.put(new HashSet<>(Collections.singletonList(TestEnum.C)), 0.3);
         assertEquals(m.measureSum(), 0.6, DELTA);
 
         m.put(new HashSet<>(Arrays.asList(TestEnum.values())), 0.4);
@@ -73,8 +73,8 @@ public class BaseMeasureTest extends TestCase
 
     public void testNormalize() throws Exception
     {
-        Set<TestEnum> a = new HashSet<>((List<TestEnum>) Collections.singletonList(TestEnum.A));
-        Set<TestEnum> b = new HashSet<>((List<TestEnum>) Collections.singletonList(TestEnum.B));
+        Set<TestEnum> a = new HashSet<>(Collections.singletonList(TestEnum.A));
+        Set<TestEnum> b = new HashSet<>(Collections.singletonList(TestEnum.B));
         BaseMeasure<TestEnum> m = new BaseMeasure<>();
 
         m.put(a, 0.2);
@@ -84,5 +84,35 @@ public class BaseMeasureTest extends TestCase
 
         assertEquals(m.get(a), 0.5, DELTA);
         assertEquals(m.get(b), 0.5, DELTA);
+    }
+
+    public void testBelief() throws Exception
+    {
+        BaseMeasure<Suspect> m = new BaseMeasure<>();
+
+        m.put(new HashSet<>(Collections.singletonList(Suspect.E)), 0.46);
+        m.put(new HashSet<>(Arrays.asList(Suspect.K, Suspect.E, Suspect.J)), 0.04);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)), 0.24);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.A, Suspect.P, Suspect.M)), 0.06);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M)), 0.16);
+        m.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.04);
+
+        assertEquals(m.belief(new HashSet<>(Collections.singletonList(Suspect.E))), 0.46, DELTA);
+        assertEquals(m.belief(new HashSet<>(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)))), 0.70, DELTA);
+    }
+
+    public void testPlausibility() throws Exception
+    {
+        BaseMeasure<Suspect> m = new BaseMeasure<>();
+
+        m.put(new HashSet<>(Collections.singletonList(Suspect.E)), 0.46);
+        m.put(new HashSet<>(Arrays.asList(Suspect.K, Suspect.E, Suspect.J)), 0.04);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)), 0.24);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.A, Suspect.P, Suspect.M)), 0.06);
+        m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M)), 0.16);
+        m.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.04);
+
+        assertEquals(m.plausibility(new HashSet<>(Collections.singletonList(Suspect.J))), 0.08, DELTA);
+        assertEquals(m.plausibility(new HashSet<>(Collections.singletonList(Suspect.E))), 1.00, DELTA);
     }
 }
