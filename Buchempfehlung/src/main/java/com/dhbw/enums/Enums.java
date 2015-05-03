@@ -13,78 +13,114 @@ public class Enums
 
         private String text;
 
-        Age(String text) {
+        Age(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Age fromString(String text) {
-            if (text != null) {
-                for (Age b : Age.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Age fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Age b : Age.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Age";
+        }
     }
 
-    public enum Sex {
+    public enum Sex
+    {
         M("m"),
         W("w");
 
         private String text;
 
-        Sex(String text) {
+        Sex(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Sex fromString(String text) {
-            if (text != null) {
-                for (Sex b : Sex.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Sex fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Sex b : Sex.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Sex";
+        }
     }
 
-    public enum Married {
+    public enum Married
+    {
         Y("ja"),
         N("nein");
         private String text;
 
-        Married(String text) {
+        Married(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Married fromString(String text) {
-            if (text != null) {
-                for (Married b : Married.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Married fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Married b : Married.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Married";
+        }
     }
 
-    public enum Children {
+    public enum Children
+    {
         ZERO("0"),
         ONE("1"),
         TWO("2"),
@@ -94,27 +130,39 @@ public class Enums
 
         private String text;
 
-        Children(String text) {
+        Children(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Children fromString(String text) {
-            if (text != null) {
-                for (Children b : Children.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Children fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Children b : Children.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Children";
+        }
     }
 
-    public enum Degree {
+    public enum Degree
+    {
         GYM("Gymnasium"),
         HAUPT("Hauptschule"),
         HOCH("Hochschule"),
@@ -124,27 +172,39 @@ public class Enums
 
         private String text;
 
-        Degree(String text) {
+        Degree(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Degree fromString(String text) {
-            if (text != null) {
-                for (Degree b : Degree.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Degree fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Degree b : Degree.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Degree";
+        }
     }
 
-    public enum Occupation {
+    public enum Occupation
+    {
         EMPLOYEE("Angestellter"),
         WORK("Arbeiter"),
         NONE("Arbeitslos"),
@@ -156,27 +216,39 @@ public class Enums
 
         private String text;
 
-        Occupation(String text) {
+        Occupation(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Occupation fromString(String text) {
-            if (text != null) {
-                for (Occupation b : Occupation.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Occupation fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Occupation b : Occupation.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Occupation";
+        }
     }
 
-    public enum Salary {
+    public enum Salary
+    {
         A("<1000"),
         B("1000-1999"),
         C("2000-2999"),
@@ -186,50 +258,73 @@ public class Enums
 
         private String text;
 
-        Salary(String text) {
+        Salary(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Salary fromString(String text) {
-            if (text != null) {
-                for (Salary b : Salary.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Salary fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Salary b : Salary.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
         }
+
+        public String toString()
+        {
+            return "Salary";
+        }
     }
 
-    public enum Book {
+    public enum Book
+    {
         A("Buch_A"),
         B("Buch_B"),
         C("Buch_C");
 
         private String text;
 
-        Book(String text) {
+        Book(String text)
+        {
             this.text = text;
         }
 
-        public String getText() {
+        public String getText()
+        {
             return this.text;
         }
 
-        public static Book fromString(String text) {
-            if (text != null) {
-                for (Book b : Book.values()) {
-                    if (text.equalsIgnoreCase(b.text)) {
+        public static Book fromString(String text)
+        {
+            if (text != null)
+            {
+                for (Book b : Book.values())
+                {
+                    if (text.equalsIgnoreCase(b.text))
+                    {
                         return b;
                     }
                 }
             }
             return null;
+        }
+
+        public String toString()
+        {
+            return "Book";
         }
     }
 

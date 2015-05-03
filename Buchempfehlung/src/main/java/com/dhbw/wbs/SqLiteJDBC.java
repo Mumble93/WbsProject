@@ -1,9 +1,9 @@
 package com.dhbw.wbs;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.dhbw.enums.Enums;
+
+import javax.sound.midi.SysexMessage;
+import java.sql.*;
 
 public class SqLiteJDBC
 {
@@ -27,6 +27,55 @@ public class SqLiteJDBC
     public Statement getStatement() throws SQLException
     {
         return connection.createStatement();
+    }
+
+    public int getRowCount()
+    {
+        int totalCount = -1;
+
+        try
+        {
+            Statement statement = connection.createStatement();
+
+            String sql = " SELECT COUNT(*) FROM test";
+
+            ResultSet set = statement.executeQuery(sql);
+
+            totalCount = set.getInt(1);
+
+            statement.close();
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return totalCount;
+    }
+
+    public int getRowCount(String column, String value, Enums.Book book)
+    {
+        int count = -1;
+
+        try
+        {
+            Statement statement = connection.createStatement();
+
+            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s' AND Book IS '%s'"
+                    , column, value, book.getText());
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            count = resultSet.getInt(1);
+
+            statement.close();
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
     }
 
     public void createTestTable()
