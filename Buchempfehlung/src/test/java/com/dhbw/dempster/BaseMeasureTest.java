@@ -36,10 +36,10 @@ public class BaseMeasureTest extends TestCase
         m2.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.2);
 
         m12 = BaseMeasure.combine(m1, m2);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M))), 0.48, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M))), 0.32, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.A, Suspect.P, Suspect.M))), 0.12, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.values()))), 0.08, DELTA);
+        assertEquals(0.48, m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M))), DELTA);
+        assertEquals(0.32, m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M))), DELTA);
+        assertEquals(0.12, m12.get(new HashSet<>(Arrays.asList(Suspect.E, Suspect.A, Suspect.P, Suspect.M))), DELTA);
+        assertEquals(0.08, m12.get(new HashSet<>(Arrays.asList(Suspect.values()))), DELTA);
 
         // With Conflict
         m1 = new BaseMeasure<>();
@@ -52,23 +52,23 @@ public class BaseMeasureTest extends TestCase
         m2.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.2);
 
         m12 = BaseMeasure.combine(m1, m2);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.P, Suspect.F))), 0.588235294117647, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.P, Suspect.F, Suspect.M, Suspect.E))), 0.235294117647059, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.K, Suspect.A, Suspect.J))), 0.117647058823529, DELTA);
-        assertEquals(m12.get(new HashSet<>(Arrays.asList(Suspect.values()))), 0.0588235294117647, DELTA);
+        assertEquals(0.588235294117647, m12.get(new HashSet<>(Arrays.asList(Suspect.P, Suspect.F))), DELTA);
+        assertEquals(0.235294117647059, m12.get(new HashSet<>(Arrays.asList(Suspect.P, Suspect.F, Suspect.M, Suspect.E))), DELTA);
+        assertEquals(0.117647058823529, m12.get(new HashSet<>(Arrays.asList(Suspect.K, Suspect.A, Suspect.J))), DELTA);
+        assertEquals(0.0588235294117647, m12.get(new HashSet<>(Arrays.asList(Suspect.values()))), DELTA);
     }
 
     public void testMeasureSum() throws Exception
     {
         BaseMeasure<TestEnum> m = new BaseMeasure<>();
         m.put(new HashSet<>(Arrays.asList(TestEnum.A, TestEnum.B)), 0.3);
-        assertEquals(m.measureSum(), 0.3, DELTA);
+        assertEquals(0.3, m.measureSum(), DELTA);
 
         m.put(new HashSet<>(Collections.singletonList(TestEnum.C)), 0.3);
-        assertEquals(m.measureSum(), 0.6, DELTA);
+        assertEquals(0.6, m.measureSum(), DELTA);
 
         m.put(new HashSet<>(Arrays.asList(TestEnum.values())), 0.4);
-        assertEquals(m.measureSum(), 1.0, DELTA);
+        assertEquals(1.0, m.measureSum(), DELTA);
     }
 
     public void testNormalize() throws Exception
@@ -82,8 +82,8 @@ public class BaseMeasureTest extends TestCase
 
         m.normalize();
 
-        assertEquals(m.get(a), 0.5, DELTA);
-        assertEquals(m.get(b), 0.5, DELTA);
+        assertEquals(0.5, m.get(a), DELTA);
+        assertEquals(0.5, m.get(b), DELTA);
     }
 
     public void testBelief() throws Exception
@@ -97,8 +97,8 @@ public class BaseMeasureTest extends TestCase
         m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M)), 0.16);
         m.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.04);
 
-        assertEquals(m.belief(new HashSet<>(Collections.singletonList(Suspect.E))), 0.46, DELTA);
-        assertEquals(m.belief(new HashSet<>(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)))), 0.70, DELTA);
+        assertEquals(0.46, m.belief(new HashSet<>(Collections.singletonList(Suspect.E))), DELTA);
+        assertEquals(0.70, m.belief(new HashSet<>(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)))), DELTA);
     }
 
     public void testPlausibility() throws Exception
@@ -112,7 +112,7 @@ public class BaseMeasureTest extends TestCase
         m.put(new HashSet<>(Arrays.asList(Suspect.E, Suspect.H, Suspect.M)), 0.16);
         m.put(new HashSet<>(Arrays.asList(Suspect.values())), 0.04);
 
-        assertEquals(m.plausibility(new HashSet<>(Collections.singletonList(Suspect.J))), 0.08, DELTA);
-        assertEquals(m.plausibility(new HashSet<>(Collections.singletonList(Suspect.E))), 1.00, DELTA);
+        assertEquals(0.08, m.plausibility(new HashSet<>(Collections.singletonList(Suspect.J))), DELTA);
+        assertEquals(1.00, m.plausibility(new HashSet<>(Collections.singletonList(Suspect.E))), DELTA);
     }
 }
