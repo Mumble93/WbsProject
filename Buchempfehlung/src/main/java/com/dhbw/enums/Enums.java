@@ -38,7 +38,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Age";
         }
@@ -76,7 +76,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Sex";
         }
@@ -113,7 +113,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Married";
         }
@@ -155,7 +155,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Children";
         }
@@ -197,7 +197,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Degree";
         }
@@ -241,7 +241,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Occupation";
         }
@@ -283,7 +283,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Salary";
         }
@@ -322,7 +322,7 @@ public class Enums
             return null;
         }
 
-        public String toString()
+        public String getEnumType()
         {
             return "Book";
         }

@@ -44,7 +44,7 @@ public class BaseMeasureLibrary
 
             for (Enums.Age age : Enums.Age.values())
             {
-                double measure = sqLiteJDBC.getRowCount(age.toString(), age.getText(), book) / totalCount;
+                double measure = sqLiteJDBC.getRowCount(age.getEnumType(), age.getText(), book) / totalCount;
                 BaseMeasure<Enums.Book> baseMeasure = new BaseMeasure<>();
             }
 
