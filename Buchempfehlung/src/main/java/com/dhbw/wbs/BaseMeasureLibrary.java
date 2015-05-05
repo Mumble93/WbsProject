@@ -8,7 +8,7 @@ import java.util.*;
 public class BaseMeasureLibrary
 {
 
-    private static HashMap<Enum, BaseMeasure<Book>> library;
+    private HashMap<Enum, BaseMeasure<Book>> library;
 
 
     public BaseMeasure<Book> getBaseMeasure(Enum feature)
