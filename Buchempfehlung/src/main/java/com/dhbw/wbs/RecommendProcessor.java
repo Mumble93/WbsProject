@@ -13,12 +13,12 @@ public class RecommendProcessor
     String pathInput, pathOutput;
     BaseMeasureLibrary library;
     int lineNumber = 0;
-    
+
     public RecommendProcessor(String pathInput, String pathOutput) throws IOException
     {
         library = new BaseMeasureLibrary();
 
-        library.printLibrary();
+        //library.printLibrary();
 
         this.pathInput = pathInput;
         this.pathOutput = pathOutput;
@@ -55,8 +55,7 @@ public class RecommendProcessor
             reader.close();
             writer.flush();
             writer.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -85,7 +84,7 @@ public class RecommendProcessor
         String chosen = plausibilities.get(maxPlausibility).getText();
 
         System.out.println(String.format("Line: %5dP(A)=%5.2fP(B)=%5.2fP(C)=%5.2f chosen=%s",
-                lineNumber, plausibA, plausibB, plausibC, chosen));
+                                         lineNumber, plausibA, plausibB, plausibC, chosen));
 
         return chosen;
     }
@@ -163,8 +162,9 @@ public class RecommendProcessor
     /**
      * Lookup the measure and add it to the list, if curEnum != null. Otherwise print an error message containing the
      * original string to stdout
-     * @param measures list to add the looked up measure
-     * @param curEnum search measure for this enum
+     *
+     * @param measures     list to add the looked up measure
+     * @param curEnum      search measure for this enum
      * @param originalEnum string which was parsed to curEnum. Used for error message
      */
     private void AddMeasureIfValid(List<BaseMeasure<Book>> measures, Enum curEnum, String originalEnum)
@@ -172,10 +172,9 @@ public class RecommendProcessor
         if (curEnum != null)
         {
             measures.add(library.getBaseMeasure(curEnum));
-        }
-        else
+        } else
         {
-            System.out.println("Error in line " + lineNumber + ": Unknown Identifier '"+ originalEnum + "'");
+            System.out.println("Error in line " + lineNumber + ": Unknown Identifier '" + originalEnum + "'");
         }
     }
 }
