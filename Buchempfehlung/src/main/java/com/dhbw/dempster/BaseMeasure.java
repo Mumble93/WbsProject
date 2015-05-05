@@ -5,55 +5,78 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A class to model the base measure m of the Dempster-Shafer theory. Subgroups are built with sets which are composed
+ * of enum values. Each set/subgroup has an evidence value assigned. The sum of all subgroups should be 1. This can
+ * be achieved with calling normalize() and is done automatically before any calculation.
+ * Omega is equal to yourEnum.values()
+ * @param <T> Type of enum to use
+ */
 public class BaseMeasure<T extends Enum>
 {
-    private Map<Set<T>, Double> focalAmount = new HashMap<>();
+    protected Map<Set<T>, Double> focalAmount = new HashMap<>();
 
-    public BaseMeasure()
-    {
-
-    }
-
+    /**
+     * Returns the evidence value for a subgroup, or 0.0 if the subgroup is not in the focal amounts
+     * @param key subgroup
+     * @return evidence value of the subgroup
+     */
     public Double get(Set<T> key)
     {
-        return focalAmount.get(key);
+        Double result = focalAmount.get(key);
+        if (result == null)
+            return 0.0;
+        else
+            return result;
     }
 
+    /**
+     * Get all subgroups in the basemeasure
+     * @return all defined subgroups
+     */
     public Set<Set<T>> keySet()
     {
         return focalAmount.keySet();
     }
 
-    public void clear()
-    {
-        focalAmount.clear();
-    }
-
+    /**
+     * Check if a subgroup is defined inside the basemeasure aka is a focal
+     * @param key subgroup
+     * @return true if there is a subgroup within the basemeasure, otherwise false
+     */
     public boolean containsKey(Set<T> key)
     {
         return focalAmount.containsKey(key);
     }
 
+    /**
+     * Remove a subgroup from the basemeasure
+     * @param key subgroup to remove
+     * @return evidence value of the removed subgroup
+     */
     public Double remove(Set<T> key)
     {
         return focalAmount.remove(key);
     }
 
     /**
-     * Put a set and a measure to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1
-     *
-     * @param set set
-     * @param measure measure
+     * Put a subgroup and its evidence value to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1
+     * @param set subgroup
+     * @param measure evidence value
      */
     public void put(Set<T> set, double measure)
     {
-        focalAmount.put(set, measure);
+        if(measure > 0)
+        {
+            // Only safe focal subgroups
+            focalAmount.put(set, measure);
+        }
     }
 
     /**
      * Combine two BaseMeasures to an accumulated one
-     * @param a m_a
-     * @param b m_b
+     * @param a first basemeasure m_a
+     * @param b second basemeasure m_b
      * @param <X> Type of enum
      * @return combined BaseMeasure m_a + m_b
      */
@@ -87,19 +110,11 @@ public class BaseMeasure<T extends Enum>
         Set<X> emptySet = new HashSet<>();
         if (result.containsKey(emptySet))
         {
-            double k = result.get(emptySet);
+            double k = result.remove(emptySet);
             if (k >= 1)
                 throw new ArithmeticException("k >= 1");
 
-            result.remove(emptySet);
-            double factor = 1 / (1 - k);
-
-            for (Set<X> set : result.keySet())
-            {
-                double oldValue = result.get(set);
-                double newValue = oldValue * factor;
-                result.put(set, newValue);
-            }
+            result.normalize();
         }
 
         return result;
@@ -116,7 +131,7 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate the current sum of the BaseMeasure
+     * Calculate the current sum of all evidence values in the basemeasure
      * @return sum of all elements
      */
     public double measureSum()
@@ -128,8 +143,8 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate belief of set x
-     * @param x set x
+     * Calculate belief of subgroup x
+     * @param x subgroup x
      * @return belief of x
      */
     public double belief(Set<T> x)
@@ -148,8 +163,8 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate plausibility of set x
-     * @param x set x
+     * Calculate plausibility of subgroup x
+     * @param x subgroup x
      * @return plausibility of x
      */
     public double plausibility(Set<T> x)
