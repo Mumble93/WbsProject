@@ -8,6 +8,11 @@ import java.util.*;
 
 import static com.dhbw.enums.Enums.*;
 
+/**
+ * Process csv (semicolon separated values) in the format age;sex;married;children;degree;occupation;salary
+ * and outputs the same data including a recommendation for a book. The input may miss some of the features but
+ * must retain semicolons for missing columns.
+ */
 public class RecommendProcessor
 {
     String pathInput, pathOutput;
@@ -24,6 +29,9 @@ public class RecommendProcessor
         this.pathOutput = pathOutput;
     }
 
+    /**
+     * Process the input to a recommendation and write results to the outfile
+     */
     public void process()
     {
         BufferedReader reader = null;
@@ -61,6 +69,12 @@ public class RecommendProcessor
         }
     }
 
+    /**
+     * Take features from one entry and calculate a recommendation by using the Dempster-Shafer theory
+     *
+     * @param data observed features in raw (string) format
+     * @return book recommendation
+     */
     private String calculateRecommendation(String[] data)
     {
         List<BaseMeasure<Book>> measures = getMeasuresFromLibrary(data);
@@ -84,11 +98,17 @@ public class RecommendProcessor
         String chosen = plausibilities.get(maxPlausibility).getText();
 
         System.out.println(String.format("Line: %5dP(A)=%5.2fP(B)=%5.2fP(C)=%5.2f chosen=%s",
-                                         lineNumber, plausibA, plausibB, plausibC, chosen));
+                lineNumber, plausibA, plausibB, plausibC, chosen));
 
         return chosen;
     }
 
+    /**
+     * Accumulate all measures to a combined one
+     *
+     * @param measures list of measures
+     * @return accumulated measure
+     */
     private BaseMeasure<Book> accumulateMeasures(List<BaseMeasure<Book>> measures)
     {
         BaseMeasure<Book> result = measures.get(0);
@@ -101,6 +121,13 @@ public class RecommendProcessor
         return result;
     }
 
+    /**
+     * Lookup the data in the MeasureLibrary and return all associated basemeasures. Expects data to be in the
+     * same order as in the input.csv
+     *
+     * @param data observed features in raw (string) format
+     * @return list of measures for the supplied features
+     */
     private List<BaseMeasure<Book>> getMeasuresFromLibrary(String[] data)
     {
         List<BaseMeasure<Enums.Book>> measures = new ArrayList<>();
@@ -161,7 +188,7 @@ public class RecommendProcessor
 
     /**
      * Lookup the measure and add it to the list, if curEnum != null. Otherwise print an error message containing the
-     * original string to stdout
+     * original string to stdout     *
      *
      * @param measures     list to add the looked up measure
      * @param curEnum      search measure for this enum

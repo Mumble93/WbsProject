@@ -2,6 +2,9 @@ package com.dhbw.wbs;
 
 import com.dhbw.enums.Enums;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 
 public class SqLiteJDBC
@@ -108,40 +111,51 @@ public class SqLiteJDBC
     }
 
     /**
-     * Fills the 'test' table of the DB Test  with values derived from the Test Data.
-     *
-     * @param testData The {@code TestData} object which encapsulates the Test Data from a .csv file.
+     * Fills the 'test' table of the DB Test with values derived from the sample csv.
+     * @param pathToCsv Path to the CSV file with the sample data
      */
-    public void createTestTableData(TestData testData)
+    public void createTestTableData(String pathToCsv)
     {
-        String[] entry;
         String sql = "INSERT INTO TEST (AGE,SEX,MARRIED,CHILDREN,DEGREE,OCCUPATION,SALARY,BOOK) " +
                 "VALUES (";
-        while ((entry = testData.getNextTestDataEntry()).length != 0)
+        try
         {
-            StringBuilder builder = new StringBuilder();
-            builder.append(sql);
+            BufferedReader reader = new BufferedReader(new FileReader(pathToCsv));
+            String line;
+            String[] entry;
 
-            for (int i = 0; i < entry.length; i++)
+            while ((line = reader.readLine()) != null)
             {
-                builder.append("'").append(entry[i]).append("'");
-                if (i != entry.length - 1)
+                entry = line.split(";");
+
+                StringBuilder builder = new StringBuilder();
+                builder.append(sql);
+
+                for (int i = 0; i < entry.length; i++)
                 {
-                    builder.append(", ");
+                    builder.append("'").append(entry[i]).append("'");
+                    if (i != entry.length - 1)
+                    {
+                        builder.append(", ");
+                    }
+                }
+
+                builder.append(");");
+
+                try
+                {
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(builder.toString());
+                    statement.close();
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
                 }
             }
-
-            builder.append(");");
-
-            try
-            {
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(builder.toString());
-                statement.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 }

@@ -15,9 +15,8 @@ public class Main
         {
             if (args[0].equalsIgnoreCase("create_db"))
             {
-                TestData testData = new TestData(args[1]);
                 sqlite.createTestTable();
-                sqlite.createTestTableData(testData);
+                sqlite.createTestTableData(args[1]);
             }
             else if (args[0].equalsIgnoreCase("recommend"))
             {
