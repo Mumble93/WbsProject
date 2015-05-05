@@ -125,7 +125,7 @@ public class BaseMeasureLibrary
             double totalMeasures = 0.0;
             for (Book book : Book.values())
             {
-                totalMeasures += baseMeasure.get(new HashSet<>(Collections.singletonList(book)));
+                totalMeasures += baseMeasure.get(new HashSet<>(Collections.singleton(book)));
             }
 
             double omega = 0.1 * totalMeasures;
@@ -133,7 +133,12 @@ public class BaseMeasureLibrary
             baseMeasure.put(allBooksSet, omega);
 
             baseMeasure.normalize();
+           Set<Book> a = new HashSet<>(Collections.singleton(Book.A));
+            Set<Book> b = new HashSet<>(Collections.singleton(Book.B));
+            Set<Book> c = new HashSet<>(Collections.singleton(Book.C));
 
+            System.out.println(String.format("%10s\tA=%.2f\tB=%.2f\tC=%.2f",
+                    baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c)));
             library.put(baseMeasureEntry.getKey(), baseMeasure);
         }
     }

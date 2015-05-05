@@ -71,9 +71,9 @@ public class RecommendProcessor
 
         BaseMeasure<Book> accumulated = accumulateMeasures(measures);
 
-        Double plausibA = accumulated.plausibility(new HashSet<>(Collections.singletonList(Book.A)));
-        Double plausibB = accumulated.plausibility(new HashSet<>(Collections.singletonList(Book.B)));
-        Double plausibC = accumulated.plausibility(new HashSet<>(Collections.singletonList(Book.C)));
+        Double plausibA = accumulated.plausibility(new HashSet<>(Collections.singleton(Book.A)));
+        Double plausibB = accumulated.plausibility(new HashSet<>(Collections.singleton(Book.B)));
+        Double plausibC = accumulated.plausibility(new HashSet<>(Collections.singleton(Book.C)));
 
         Map<Double, Book> plausibilities = new HashMap<>();
         plausibilities.put(plausibA, Book.A);
