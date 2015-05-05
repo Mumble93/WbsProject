@@ -10,26 +10,30 @@ import static com.dhbw.enums.Enums.*;
 
 public class RecommendProcessor
 {
-    BufferedReader reader;
-    BufferedWriter writer;
+    String pathInput, pathOutput;
     BaseMeasureLibrary library;
     int lineNumber = 0;
     
     public RecommendProcessor(String pathInput, String pathOutput) throws IOException
     {
         library = new BaseMeasureLibrary();
-        
-        reader = new BufferedReader(new FileReader(pathInput));
-        writer = new BufferedWriter(new FileWriter(pathOutput));
+
+        this.pathInput = pathInput;
+        this.pathOutput = pathOutput;
     }
 
     public void process()
     {
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
         String[] data;
         String line;
         String recommendation;
         try
         {
+            reader = new BufferedReader(new FileReader(pathInput));
+            writer = new BufferedWriter(new FileWriter(pathOutput));
+
             while ((line = reader.readLine()) != null)
             {
                 lineNumber++;
@@ -45,7 +49,10 @@ public class RecommendProcessor
                 recommendation = calculateRecommendation(data);
                 writer.write(line + ";" + recommendation + "\n");
             }
+
+            reader.close();
             writer.flush();
+            writer.close();
         }
         catch (IOException e)
         {
