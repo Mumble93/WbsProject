@@ -10,6 +10,9 @@ public class JdbcTest
 
     private static SqLiteJDBC sqLiteJDBC;
 
+    private static final double DELTA = 1e-10;
+
+
     @BeforeClass
     public static void setup()
     {
@@ -19,21 +22,21 @@ public class JdbcTest
     @Test
     public void testTotalRowCount()
     {
-        int totalCount = sqLiteJDBC.getRowCount();
+        double totalCount = sqLiteJDBC.getRowCount();
 
         System.out.println("Total count was " + totalCount);
 
-        assertEquals(100, totalCount);
+        assertEquals(100, totalCount, DELTA);
     }
 
     @Test
     public void testBookACount()
     {
-        int count = sqLiteJDBC.getRowCount("Age", "<18", Enums.Book.A);
+        double count = sqLiteJDBC.getRowCount("Age", "<18", Enums.Book.A);
 
         System.out.println("Count was " + count);
 
-        assertEquals(7, count);
+        assertEquals(7, count, DELTA);
     }
 
 }

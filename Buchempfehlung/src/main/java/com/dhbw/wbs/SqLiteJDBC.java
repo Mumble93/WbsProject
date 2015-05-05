@@ -29,9 +29,9 @@ public class SqLiteJDBC
         return connection.createStatement();
     }
 
-    public int getRowCount()
+    public double getRowCount()
     {
-        int totalCount = -1;
+        double totalCount = -1.0;
 
         try
         {
@@ -41,7 +41,7 @@ public class SqLiteJDBC
 
             ResultSet set = statement.executeQuery(sql);
 
-            totalCount = set.getInt(1);
+            totalCount = set.getDouble(1);
 
             statement.close();
 
@@ -53,9 +53,34 @@ public class SqLiteJDBC
         return totalCount;
     }
 
-    public int getRowCount(String column, String value, Enums.Book book)
+    public double getRowCountForFeature(String column, String value)
     {
-        int count = -1;
+        double count = -1.0;
+
+        try
+        {
+            Statement statement = connection.createStatement();
+
+            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s'"
+                    , column, value);
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            count = resultSet.getDouble(1);
+
+            statement.close();
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public double getRowCount(String column, String value, Enums.Book book)
+    {
+        double count = -1.0;
 
         try
         {
@@ -66,7 +91,7 @@ public class SqLiteJDBC
 
             ResultSet resultSet = statement.executeQuery(sql);
 
-            count = resultSet.getInt(1);
+            count = resultSet.getDouble(1);
 
             statement.close();
 
