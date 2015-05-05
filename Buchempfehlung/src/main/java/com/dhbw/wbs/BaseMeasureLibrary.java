@@ -6,25 +6,36 @@ import java.util.*;
 
 import static com.dhbw.enums.Enums.*;
 
+/**
+ * Calculates and contains BaseMeasures of every book for every manifestation of a feature based on the data in table 'test'.
+ */
 public class BaseMeasureLibrary
 {
 
     private HashMap<Enum, BaseMeasure<Book>> library;
 
 
+    /**
+     * Returns the BaseMeasure<Book> object for a certain feature.
+     *
+     * @param feature The feature whose BaseMeasure object should be returned as Enum
+     * @return The BaseMeasure for the feature
+     */
     public BaseMeasure<Book> getBaseMeasure(Enum feature)
     {
         return library.get(feature);
     }
 
 
+    /**
+     * Creates and calculates all BaseMeasures from the data in 'test' and returns the object.
+     */
     public BaseMeasureLibrary()
     {
 
         library = new HashMap<>();
 
         SqLiteJDBC sqLiteJDBC = new SqLiteJDBC();
-        //double totalCount = sqLiteJDBC.getRowCount();
 
         calculateAllMeasures(sqLiteJDBC);
         getOmegaForFeatures();
@@ -32,27 +43,30 @@ public class BaseMeasureLibrary
     }
 
 
+    /**
+     * Calculates BaseMeasures for every book and every manifestation of a feature.
+     *
+     * @param sqLiteJDBC The DAO
+     */
     private void calculateAllMeasures(SqLiteJDBC sqLiteJDBC)
     {
         for (Book book : Book.values())
         {
-            
+
             double count;
-            
-            if(book == Book.A)
+
+            if (book == Book.A)
             {
-                count = sqLiteJDBC.getRowCountForFeature("Book", Book.A.getText());
-            }
-            else if (book == Book.B)
+                count = sqLiteJDBC.getRowCount("Book", Book.A.getText());
+            } else if (book == Book.B)
             {
-                count = sqLiteJDBC.getRowCountForFeature("Book", Book.B.getText());
-            }
-            else
+                count = sqLiteJDBC.getRowCount("Book", Book.B.getText());
+            } else
             {
-                count = sqLiteJDBC.getRowCountForFeature("Book", Book.C.getText());
+                count = sqLiteJDBC.getRowCount("Book", Book.C.getText());
             }
 
-            
+
             for (Age age : Age.values())
             {
                 double measure = sqLiteJDBC.getRowCount(age.getEnumType(), age.getText(), book) / count;
@@ -98,6 +112,14 @@ public class BaseMeasureLibrary
 
     }
 
+    /**
+     * Adds the calculated measure for a certain book and feature into the library. If a BaseMeasure for this feature<br>
+     * does not already exist, one is created.
+     *
+     * @param feature The manifestation of a feature as Enum.
+     * @param book    The Book this measure was calculated for.
+     * @param measure The calculated measure as double.
+     */
     private void putMeasureInLibrary(Enum feature, Book book, double measure)
     {
         BaseMeasure<Book> existingBaseMeasure = library.get(feature);
@@ -115,6 +137,9 @@ public class BaseMeasureLibrary
 
     }
 
+    /**
+     * Calculates the Omega value for every manifestation of a feature.
+     */
     private void getOmegaForFeatures()
     {
         Set<Book> allBooksSet = new HashSet<>(Arrays.asList(Book.values()));
@@ -133,16 +158,19 @@ public class BaseMeasureLibrary
             baseMeasure.put(allBooksSet, omega);
 
             baseMeasure.normalize();
-           Set<Book> a = new HashSet<>(Collections.singleton(Book.A));
+            Set<Book> a = new HashSet<>(Collections.singleton(Book.A));
             Set<Book> b = new HashSet<>(Collections.singleton(Book.B));
             Set<Book> c = new HashSet<>(Collections.singleton(Book.C));
 
             System.out.println(String.format("%10s\tA=%.2f\tB=%.2f\tC=%.2f",
-                    baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c)));
+                                             baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c)));
             library.put(baseMeasureEntry.getKey(), baseMeasure);
         }
     }
 
+    /**
+     * Prints out the whole library with evey BaseMeasure for every feature.
+     */
     public void printLibrary()
     {
         if (null == library || library.isEmpty())

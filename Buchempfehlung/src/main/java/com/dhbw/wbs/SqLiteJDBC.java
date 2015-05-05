@@ -2,7 +2,6 @@ package com.dhbw.wbs;
 
 import com.dhbw.enums.Enums;
 
-import javax.sound.midi.SysexMessage;
 import java.sql.*;
 
 public class SqLiteJDBC
@@ -10,6 +9,9 @@ public class SqLiteJDBC
 
     private Connection connection;
 
+    /**
+     * Establishes a connection to the SQLite DB. Creates the DB if it does not exist. Poses as DAO.
+     */
     public SqLiteJDBC()
     {
         try
@@ -24,60 +26,27 @@ public class SqLiteJDBC
         System.out.println("Opened database successfully");
     }
 
-    public Statement getStatement() throws SQLException
+
+    /**
+     * Returns the number of rows that share a manifestation of an feature.
+     *
+     * @param column The specific feature (Age, Sex, Occupation...) as String.
+     * @param value  The manifestation of the feature (<18, m, Hausfrau...) as String.
+     * @return The number of rows containing the manifestation of the feature.
+     */
+    public double getRowCount(String column, String value)
     {
-        return connection.createStatement();
+        return getRowCount(column, value, null);
     }
 
-    public double getRowCount()
-    {
-        double totalCount = -1.0;
-
-        try
-        {
-            Statement statement = connection.createStatement();
-
-            String sql = " SELECT COUNT(*) FROM test";
-
-            ResultSet set = statement.executeQuery(sql);
-
-            totalCount = set.getDouble(1);
-
-            statement.close();
-
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        return totalCount;
-    }
-
-    public double getRowCountForFeature(String column, String value)
-    {
-        double count = -1.0;
-
-        try
-        {
-            Statement statement = connection.createStatement();
-
-            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s'"
-                    , column, value);
-
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            count = resultSet.getDouble(1);
-
-            statement.close();
-
-        }catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        return count;
-    }
-
+    /**
+     * Returns the number of rows that share a manifestation of an arbitrary feature AND a book.
+     *
+     * @param column The specific feature (Age, Sex, Occupation...) as String
+     * @param value  The manifestation of the feature (<18, m, Hausfrau...) as String
+     * @param book   The Book (Buch_A,_B,_C) as Enums.Book
+     * @return The number of rows containing the manifestation of the feature and sharing the same book.
+     */
     public double getRowCount(String column, String value, Enums.Book book)
     {
         double count = -1.0;
@@ -86,8 +55,12 @@ public class SqLiteJDBC
         {
             Statement statement = connection.createStatement();
 
-            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s' AND Book IS '%s'"
-                    , column, value, book.getText());
+            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s'", column, value);
+
+            if (null != book)
+            {
+                sql += String.format(" AND Book IS '%s'", book.getText());
+            }
 
             ResultSet resultSet = statement.executeQuery(sql);
 
@@ -95,7 +68,7 @@ public class SqLiteJDBC
 
             statement.close();
 
-        }catch (SQLException e)
+        } catch (SQLException e)
         {
             e.printStackTrace();
         }
@@ -103,6 +76,9 @@ public class SqLiteJDBC
         return count;
     }
 
+    /**
+     * Creates an SQLite with all features as columns.
+     */
     public void createTestTable()
     {
         System.out.println("Preparing DB with test entries...");
@@ -131,6 +107,11 @@ public class SqLiteJDBC
         }
     }
 
+    /**
+     * Fills the 'test' table of the DB Test  with values derived from the Test Data.
+     *
+     * @param testData The {@code TestData} object which encapsulates the Test Data from a .csv file.
+     */
     public void createTestTableData(TestData testData)
     {
         String[] entry;
