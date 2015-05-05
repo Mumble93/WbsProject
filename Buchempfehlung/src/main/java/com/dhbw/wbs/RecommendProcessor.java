@@ -8,9 +8,6 @@ import java.util.*;
 
 import static com.dhbw.enums.Enums.*;
 
-/**
- * Created by Andreas on 03.05.2015.
- */
 public class RecommendProcessor
 {
     BufferedReader reader;

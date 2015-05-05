@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by degele on 16.04.2015.
- */
 public class BaseMeasure<T extends Enum>
 {
     private Map<Set<T>, Double> focalAmount = new HashMap<>();
