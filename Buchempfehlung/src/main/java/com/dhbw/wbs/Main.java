@@ -1,7 +1,5 @@
 package com.dhbw.wbs;
 
-import java.io.IOException;
-
 public class Main
 {
 
@@ -20,20 +18,13 @@ public class Main
             }
             else if (args[0].equalsIgnoreCase("recommend"))
             {
-                try
-                {
-                    String inFile = args[1];
-                    String outFile;
+                String inFile = args[1];
+                String outFile;
 
-                    outFile = FileUtil.getOutFileName(inFile);
+                outFile = FileUtil.getOutFileName(inFile);
 
-                    RecommendProcessor processor = new RecommendProcessor(inFile, outFile);
-                    processor.process();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                RecommendProcessor processor = new RecommendProcessor(inFile, outFile);
+                processor.process();
             }
             else
             {

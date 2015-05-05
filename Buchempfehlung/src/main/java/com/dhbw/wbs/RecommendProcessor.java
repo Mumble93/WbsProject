@@ -19,7 +19,7 @@ public class RecommendProcessor
     BaseMeasureLibrary library;
     int lineNumber = 0;
 
-    public RecommendProcessor(String pathInput, String pathOutput) throws IOException
+    public RecommendProcessor(String pathInput, String pathOutput)
     {
         library = new BaseMeasureLibrary();
 
