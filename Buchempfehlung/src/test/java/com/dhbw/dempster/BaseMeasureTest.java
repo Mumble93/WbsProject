@@ -1,13 +1,11 @@
 package com.dhbw.dempster;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-/**
- * Created by Andreas on 25.04.2015.
- */
-public class BaseMeasureTest extends TestCase
+public class BaseMeasureTest
 {
     private static final double DELTA = 1e-10;
 
@@ -21,6 +19,7 @@ public class BaseMeasureTest extends TestCase
         P, F, M, K, E, A, H, J
     }
 
+    @Test
     public void testCombine() throws Exception
     {
         // Test from an exam of Reichardt
@@ -58,6 +57,7 @@ public class BaseMeasureTest extends TestCase
         assertEquals(0.0588235294117647, m12.get(new HashSet<>(Arrays.asList(Suspect.values()))), DELTA);
     }
 
+    @Test
     public void testMeasureSum() throws Exception
     {
         BaseMeasure<TestEnum> m = new BaseMeasure<>();
@@ -71,6 +71,7 @@ public class BaseMeasureTest extends TestCase
         assertEquals(1.0, m.measureSum(), DELTA);
     }
 
+    @Test
     public void testNormalize() throws Exception
     {
         Set<TestEnum> a = new HashSet<>(Collections.singletonList(TestEnum.A));
@@ -86,6 +87,7 @@ public class BaseMeasureTest extends TestCase
         assertEquals(0.5, m.get(b), DELTA);
     }
 
+    @Test
     public void testBelief() throws Exception
     {
         BaseMeasure<Suspect> m = new BaseMeasure<>();
@@ -101,6 +103,7 @@ public class BaseMeasureTest extends TestCase
         assertEquals(0.70, m.belief(new HashSet<>(new HashSet<>(Arrays.asList(Suspect.E, Suspect.M)))), DELTA);
     }
 
+    @Test
     public void testPlausibility() throws Exception
     {
         BaseMeasure<Suspect> m = new BaseMeasure<>();

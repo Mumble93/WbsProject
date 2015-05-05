@@ -1,6 +1,7 @@
 package com.dhbw.wbs;
 
-import com.dhbw.enums.Enums;
+import static com.dhbw.enums.Enums.*;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,7 +27,7 @@ public class BaseMeasureLibraryTest
     public void testBaseMeasureForMaleAndBookA()
     {
 
-        double measureForMaleAndBookA = library.getBaseMeasure(Enums.Sex.M).get(new HashSet<>(Collections.singletonList(Enums.Book.A)));
+        double measureForMaleAndBookA = library.getBaseMeasure(Sex.M).get(new HashSet<>(Collections.singletonList(Book.A)));
 
         assertEquals(0.19, measureForMaleAndBookA, DELTA);
     }
@@ -35,7 +36,7 @@ public class BaseMeasureLibraryTest
     public void testBaseMeasureForMaleAndBookB()
     {
 
-        double measureForMaleAndBookB = library.getBaseMeasure(Enums.Sex.M).get(new HashSet<>(Collections.singletonList(Enums.Book.B)));
+        double measureForMaleAndBookB = library.getBaseMeasure(Sex.M).get(new HashSet<>(Collections.singletonList(Book.B)));
 
         assertEquals(0.07, measureForMaleAndBookB, DELTA);
     }
@@ -44,7 +45,7 @@ public class BaseMeasureLibraryTest
     public void testBaseMeasureForMaleAndBookC()
     {
 
-        double measureForMaleAndBookC = library.getBaseMeasure(Enums.Sex.M).get(new HashSet<>(Collections.singletonList(Enums.Book.C)));
+        double measureForMaleAndBookC = library.getBaseMeasure(Sex.M).get(new HashSet<>(Collections.singletonList(Book.C)));
 
         assertEquals(0.3, measureForMaleAndBookC, DELTA);
     }
@@ -53,7 +54,7 @@ public class BaseMeasureLibraryTest
     public void testBaseMeasureForMaleAndBookOmega()
     {
 
-        double measureForMaleAndBookOmega = library.getBaseMeasure(Enums.Sex.M).get(new HashSet<>(Arrays.asList(Enums.Book.values())));
+        double measureForMaleAndBookOmega = library.getBaseMeasure(Sex.M).get(new HashSet<>(Arrays.asList(Book.values())));
 
         assertEquals(0.44, measureForMaleAndBookOmega, DELTA);
     }
