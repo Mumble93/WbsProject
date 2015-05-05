@@ -76,7 +76,12 @@ public class RecommendProcessor
 
         Double maxPlausibility = Collections.max(plausibilities.keySet());
 
-        return plausibilities.get(maxPlausibility).getText();
+        String chosen = plausibilities.get(maxPlausibility).getText();
+
+        System.out.println(String.format("Line: %5dP(A)=%5.2fP(B)=%5.2fP(C)=%5.2fchosen=%s",
+                lineNumber, plausibA, plausibB, plausibC, chosen));
+
+        return chosen;
     }
 
     private BaseMeasure<Book> accumulateMeasures(List<BaseMeasure<Book>> measures)
