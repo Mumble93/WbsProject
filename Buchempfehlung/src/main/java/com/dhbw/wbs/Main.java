@@ -1,8 +1,6 @@
 package com.dhbw.wbs;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class Main
 {
@@ -25,7 +23,12 @@ public class Main
             {
                 try
                 {
-                    RecommendProcessor processor = new RecommendProcessor(args[1], args[1] + ".out");
+                    String inFile = args[1];
+                    String outFile;
+
+                    outFile = FileUtil.getOutFileName(inFile);
+
+                    RecommendProcessor processor = new RecommendProcessor(inFile, outFile);
                     processor.process();
                 }
                 catch (IOException e)
