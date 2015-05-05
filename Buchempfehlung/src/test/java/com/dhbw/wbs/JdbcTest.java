@@ -1,15 +1,23 @@
 package com.dhbw.wbs;
 
 import com.dhbw.enums.Enums;
-import junit.framework.TestCase;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-public class JdbcTest extends TestCase
+public class JdbcTest
 {
 
-    private static SqLiteJDBC sqLiteJDBC = new SqLiteJDBC();
+    private static SqLiteJDBC sqLiteJDBC;
 
+    @BeforeClass
+    public static void setup()
+    {
+        sqLiteJDBC = new SqLiteJDBC();
+    }
 
-    public static void testTotalRowCount()
+    @Test
+    public void testTotalRowCount()
     {
         int totalCount = sqLiteJDBC.getRowCount();
 
@@ -18,7 +26,8 @@ public class JdbcTest extends TestCase
         assertEquals(100, totalCount);
     }
 
-    public static void testBookACount()
+    @Test
+    public void testBookACount()
     {
         int count = sqLiteJDBC.getRowCount("Age", "<18", Enums.Book.A);
 
