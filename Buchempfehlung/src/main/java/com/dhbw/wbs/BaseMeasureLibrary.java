@@ -162,8 +162,8 @@ public class BaseMeasureLibrary
             Set<Book> b = new HashSet<>(Collections.singleton(Book.B));
             Set<Book> c = new HashSet<>(Collections.singleton(Book.C));
 
-            System.out.println(String.format("%10s\tA=%.2f\tB=%.2f\tC=%.2f",
-                                             baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c)));
+            System.out.println(String.format("%10s\tA=%.2f\tB=%.2f\tC=%.2f\tOmega=%.2f",
+                                             baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c), baseMeasure.get(allBooksSet)));
             library.put(baseMeasureEntry.getKey(), baseMeasure);
         }
     }
