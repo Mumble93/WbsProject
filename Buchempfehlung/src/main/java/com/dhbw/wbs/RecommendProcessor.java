@@ -18,7 +18,6 @@ public class RecommendProcessor
     public RecommendProcessor(String pathInput, String pathOutput) throws IOException
     {
         library = new BaseMeasureLibrary();
-        // TODO: Initialize library
         
         reader = new BufferedReader(new FileReader(pathInput));
         writer = new BufferedWriter(new FileWriter(pathOutput));
@@ -35,7 +34,7 @@ public class RecommendProcessor
             {
                 lineNumber++;
                 //Alter, Geschlecht, Verheiratet, Kinderzahl, Abschluss, Beruf, Einkommen
-                data = line.split(";");
+                data = line.split(";", 7);
 
                 if (data.length != 7)
                 {
@@ -44,8 +43,9 @@ public class RecommendProcessor
                 }
 
                 recommendation = calculateRecommendation(data);
-                writer.write(line + ";" + recommendation);
+                writer.write(line + ";" + recommendation + "\n");
             }
+            writer.flush();
         }
         catch (IOException e)
         {

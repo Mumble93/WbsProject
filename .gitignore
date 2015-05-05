@@ -14,3 +14,5 @@ hs_err_pid*
 .idea/
 out/
 target/
+/test.db
+/testinput.out.csv
