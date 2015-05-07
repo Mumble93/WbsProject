@@ -158,9 +158,6 @@ public class BaseMeasureLibrary
             baseMeasure.put(allBooksSet, omega);
 
             baseMeasure.normalize();
-            Set<Book> a = new HashSet<>(Collections.singleton(Book.A));
-            Set<Book> b = new HashSet<>(Collections.singleton(Book.B));
-            Set<Book> c = new HashSet<>(Collections.singleton(Book.C));
 
             library.put(baseMeasureEntry.getKey(), baseMeasure);
         }
