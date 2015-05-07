@@ -47,7 +47,7 @@ public class RecommendProcessor
             {
                 lineNumber++;
 
-                if (line.equals("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen;Buch"))
+                if (line.startsWith("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen"))
                 {
                     // Ignore header
                     continue;
