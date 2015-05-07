@@ -8,8 +8,8 @@ import java.util.Set;
 /**
  * A class to model the base measure m of the Dempster-Shafer theory. Subgroups are built with sets which are composed
  * of enum values. Each set/subgroup has an evidence value assigned. The sum of all subgroups should be 1. This can
- * be achieved with calling normalize() and is done automatically before any calculation.
- * Omega is equal to yourEnum.values()
+ * be achieved with calling normalize() and is done automatically before any calculation.<br>
+ * Omega is equal to Enum.values().
  * @param <T> Type of enum to use
  */
 public class BaseMeasure<T extends Enum>
@@ -31,8 +31,8 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Get all subgroups in the basemeasure
-     * @return all defined subgroups
+     * Get all subgroups in the basemeasure.
+     * @return All defined subgroups.
      */
     public Set<Set<T>> keySet()
     {
@@ -40,9 +40,9 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Check if a subgroup is defined inside the basemeasure aka is a focal
-     * @param key subgroup
-     * @return true if there is a subgroup within the basemeasure, otherwise false
+     * Check if a subgroup is defined inside the basemeasure aka is a focal group.
+     * @param key Subgroup as Set.
+     * @return True if there is a subgroup within the basemeasure, otherwise false.
      */
     public boolean containsKey(Set<T> key)
     {
@@ -50,9 +50,9 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Remove a subgroup from the basemeasure
-     * @param key subgroup to remove
-     * @return evidence value of the removed subgroup
+     * Remove a subgroup from the basemeasure.
+     * @param key Subgroup to remove.
+     * @return Evidence value of the removed subgroup.
      */
     public Double remove(Set<T> key)
     {
@@ -60,9 +60,9 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Put a subgroup and its evidence value to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1
-     * @param set subgroup
-     * @param measure evidence value
+     * Put a subgroup and its evidence value to the BaseMeasure. The sum of measures in the BaseMeasure should not exceed 1.
+     * @param set Subgroup as Set.
+     * @param measure Evidence value.
      */
     public void put(Set<T> set, double measure)
     {
@@ -74,11 +74,11 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Combine two BaseMeasures to an accumulated one
-     * @param a first basemeasure m_a
-     * @param b second basemeasure m_b
-     * @param <X> Type of enum
-     * @return combined BaseMeasure m_a + m_b
+     * Combine two BaseMeasures to an accumulated one.
+     * @param a First basemeasure m_a.
+     * @param b Second basemeasure m_b.
+     * @param <X> Type of enum.
+     * @return Combined BaseMeasure m_a + m_b.
      */
     public static <X extends Enum> BaseMeasure<X> combine(BaseMeasure<X> a, BaseMeasure<X> b)
     {
@@ -121,7 +121,7 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Normalize the sum of all elements to 1
+     * Normalize the sum of all elements to 1.
      */
     public void normalize()
     {
@@ -131,8 +131,8 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate the current sum of all evidence values in the basemeasure
-     * @return sum of all elements
+     * Calculate the current sum of all evidence values in the basemeasure.
+     * @return Sum of all elements.
      */
     public double measureSum()
     {
@@ -143,9 +143,9 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate belief of subgroup x
-     * @param x subgroup x
-     * @return belief of x
+     * Calculate belief of subgroup x.
+     * @param x Subgroup x.
+     * @return Belief of x.
      */
     public double belief(Set<T> x)
     {
@@ -163,9 +163,9 @@ public class BaseMeasure<T extends Enum>
     }
 
     /**
-     * Calculate plausibility of subgroup x
-     * @param x subgroup x
-     * @return plausibility of x
+     * Calculate plausibility of subgroup x.
+     * @param x Subgroup x.
+     * @return Plausibility of x.
      */
     public double plausibility(Set<T> x)
     {

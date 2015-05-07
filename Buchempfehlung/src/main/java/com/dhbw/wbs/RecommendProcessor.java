@@ -29,7 +29,7 @@ public class RecommendProcessor
     }
 
     /**
-     * Process the input to a recommendation and write results to the outfile
+     * Process the input to a recommendation and write results to the outfile.
      */
     public void process()
     {
@@ -76,10 +76,10 @@ public class RecommendProcessor
     }
 
     /**
-     * Take features from one entry and calculate a recommendation by using the Dempster-Shafer theory
+     * Take features from one entry and calculate a recommendation by using the Dempster-Shafer theory.
      *
-     * @param data observed features in raw (string) format
-     * @return book recommendation
+     * @param data Observed features in raw (String) format.
+     * @return book Recommendation - The recommended book in its String representation.
      */
     private String calculateRecommendation(String[] data)
     {
@@ -110,10 +110,10 @@ public class RecommendProcessor
     }
 
     /**
-     * Accumulate all measures to a combined one
+     * Accumulate all measures to a combined one.
      *
-     * @param measures list of measures
-     * @return accumulated measure
+     * @param measures List of measures
+     * @return Accumulated measure
      */
     private BaseMeasure<Book> accumulateMeasures(List<BaseMeasure<Book>> measures)
     {
@@ -129,10 +129,10 @@ public class RecommendProcessor
 
     /**
      * Lookup the data in the MeasureLibrary and return all associated basemeasures. Expects data to be in the
-     * same order as in the input.csv
+     * same order as in the input.csv.
      *
-     * @param data observed features in raw (string) format
-     * @return list of measures for the supplied features
+     * @param data Observed features in raw (string) format.
+     * @return List of measures for the supplied features
      */
     private List<BaseMeasure<Book>> getMeasuresFromLibrary(String[] data)
     {
@@ -194,11 +194,11 @@ public class RecommendProcessor
 
     /**
      * Lookup the measure and add it to the list, if curEnum != null. Otherwise print an error message containing the
-     * original string to stdout     *
+     * original string to stdout.
      *
-     * @param measures     list to add the looked up measure
-     * @param curEnum      search measure for this enum
-     * @param originalEnum string which was parsed to curEnum. Used for error message
+     * @param measures     List to add the looked up measure.
+     * @param curEnum      Search measure for this enum.
+     * @param originalEnum String which was parsed to curEnum. Used for error message.
      */
     private void AddMeasureIfValid(List<BaseMeasure<Book>> measures, Enum curEnum, String originalEnum)
     {

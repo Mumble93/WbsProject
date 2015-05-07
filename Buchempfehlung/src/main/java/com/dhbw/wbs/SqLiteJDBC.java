@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Database Access Object for the SQLite database holding the test data.
+ */
 public class SqLiteJDBC
 {
 
@@ -55,10 +58,10 @@ public class SqLiteJDBC
 
 
     /**
-     * Returns the number of rows that share a manifestation of an feature.
+     * Returns the number of rows that share a manifestation of a feature.
      *
      * @param column The specific feature (Age, Sex, Occupation...) as String.
-     * @param value  The manifestation of the feature (<18, m, Hausfrau...) as String.
+     * @param value  The manifestation of the feature (&lt;18, m, Hausfrau...) as String.
      * @return The number of rows containing the manifestation of the feature.
      */
     public double getRowCount(String column, String value)
@@ -67,10 +70,10 @@ public class SqLiteJDBC
     }
 
     /**
-     * Returns the number of rows that share a manifestation of an arbitrary feature AND a book.
+     * Returns the number of rows that share a manifestation of a feature AND a book.
      *
      * @param column The specific feature (Age, Sex, Occupation...) as String
-     * @param value  The manifestation of the feature (<18, m, Hausfrau...) as String
+     * @param value  The manifestation of the feature (&lt;18, m, Hausfrau...) as String
      * @param book   The Book (Buch_A,_B,_C) as Enums.Book
      * @return The number of rows containing the manifestation of the feature and sharing the same book.
      */
