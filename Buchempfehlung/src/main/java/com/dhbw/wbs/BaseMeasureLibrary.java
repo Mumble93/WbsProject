@@ -16,7 +16,7 @@ public class BaseMeasureLibrary
 
 
     /**
-     * Returns the BaseMeasure<Book> object for a certain feature.
+     * Returns the BaseMeasure&lt;Book&gt; object for a certain feature.
      *
      * @param feature The feature whose BaseMeasure object should be returned as Enum
      * @return The BaseMeasure for the feature
@@ -38,7 +38,7 @@ public class BaseMeasureLibrary
         SqLiteJDBC sqLiteJDBC = new SqLiteJDBC();
 
         calculateAllMeasures(sqLiteJDBC);
-        getOmegaForFeatures();
+        calculateOmegaForFeatures();
 
     }
 
@@ -140,7 +140,7 @@ public class BaseMeasureLibrary
     /**
      * Calculates the Omega value for every manifestation of a feature.
      */
-    private void getOmegaForFeatures()
+    private void calculateOmegaForFeatures()
     {
         Set<Book> allBooksSet = new HashSet<>(Arrays.asList(Book.values()));
 

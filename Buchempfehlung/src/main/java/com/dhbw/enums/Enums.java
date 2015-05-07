@@ -1,5 +1,9 @@
 package com.dhbw.enums;
 
+
+/**
+ * Class to hold all Enums concerning available features.
+ */
 public class Enums
 {
     public enum Age
