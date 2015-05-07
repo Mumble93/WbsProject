@@ -153,7 +153,7 @@ public class BaseMeasureLibrary
                 totalMeasures += baseMeasure.get(new HashSet<>(Collections.singleton(book)));
             }
 
-            double omega = 0.1 * totalMeasures;
+            double omega = 0.01 * totalMeasures;
 
             baseMeasure.put(allBooksSet, omega);
 
