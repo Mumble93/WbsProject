@@ -126,6 +126,12 @@ public class SqLiteJDBC
 
             while ((line = reader.readLine()) != null)
             {
+                if (line.equals("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen;Buch"))
+                {
+                    // Ignore header
+                    continue;
+                }
+
                 entry = line.split(";");
 
                 StringBuilder builder = new StringBuilder();

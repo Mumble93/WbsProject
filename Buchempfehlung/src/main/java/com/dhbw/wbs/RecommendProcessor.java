@@ -47,6 +47,13 @@ public class RecommendProcessor
             while ((line = reader.readLine()) != null)
             {
                 lineNumber++;
+
+                if (line.equals("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen;Buch"))
+                {
+                    // Ignore header
+                    continue;
+                }
+
                 //Alter, Geschlecht, Verheiratet, Kinderzahl, Abschluss, Beruf, Einkommen
                 data = line.split(";", 7);
 
