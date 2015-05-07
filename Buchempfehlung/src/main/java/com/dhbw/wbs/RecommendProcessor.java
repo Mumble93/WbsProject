@@ -22,8 +22,7 @@ public class RecommendProcessor
     public RecommendProcessor(String pathInput, String pathOutput)
     {
         library = new BaseMeasureLibrary();
-
-        //library.printLibrary();
+        library.printLibrary();
 
         this.pathInput = pathInput;
         this.pathOutput = pathOutput;
@@ -104,7 +103,7 @@ public class RecommendProcessor
 
         String chosen = plausibilities.get(maxPlausibility).getText();
 
-        System.out.println(String.format("Line: %5dP(A)=%5.2fP(B)=%5.2fP(C)=%5.2f chosen=%s",
+        System.out.println(String.format("Line: %3d\tP(A)=%5.2f\tP(B)=%5.2f\tP(C)=%5.2f\tchosen=%s",
                 lineNumber, plausibA, plausibB, plausibC, chosen));
 
         return chosen;

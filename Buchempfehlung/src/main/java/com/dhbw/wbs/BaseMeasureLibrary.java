@@ -162,8 +162,6 @@ public class BaseMeasureLibrary
             Set<Book> b = new HashSet<>(Collections.singleton(Book.B));
             Set<Book> c = new HashSet<>(Collections.singleton(Book.C));
 
-            System.out.println(String.format("%10s\tA=%.2f\tB=%.2f\tC=%.2f\tOmega=%.2f",
-                                             baseMeasureEntry.getKey(), baseMeasure.get(a), baseMeasure.get(b), baseMeasure.get(c), baseMeasure.get(allBooksSet)));
             library.put(baseMeasureEntry.getKey(), baseMeasure);
         }
     }
@@ -182,15 +180,21 @@ public class BaseMeasureLibrary
             {
                 StringBuilder builder = new StringBuilder();
 
-                builder.append("Feature ").append(entry.getKey().name()).append(": ");
+                builder.append("Feature ")
+                        .append(String.format("%10s", entry.getKey().name()))
+                        .append(":\t");
                 BaseMeasure<Book> measure = entry.getValue();
 
                 for (Book book : Book.values())
                 {
-                    builder.append(book.getText()).append(": ").append(measure.get(new HashSet<>(Collections.singletonList(book)))).append(", ");
+                    builder.append(book.getText())
+                            .append(": ")
+                            .append(String.format("%.2f", measure.get(new HashSet<>(Collections.singletonList(book)))))
+                            .append(",\t");
                 }
 
-                builder.append("Omega: ").append(measure.get(new HashSet<>(Arrays.asList(Book.values()))));
+                builder.append("Omega: ").
+                        append(String.format("%.2f", measure.get(new HashSet<>(Arrays.asList(Book.values())))));
                 System.out.println(builder.toString());
             }
         }
