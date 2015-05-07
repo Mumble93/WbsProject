@@ -3,11 +3,9 @@ package com.dhbw.wbs;
 public class Main
 {
 
-    private static SqLiteJDBC sqlite;
-
     public static void main(String[] args)
     {
-        sqlite = new SqLiteJDBC();
+        SqLiteJDBC sqlite = new SqLiteJDBC();
 
         if (args.length == 2)
         {
