@@ -102,7 +102,7 @@ public class SqLiteJDBC
             statement.executeUpdate(sql);
             statement.close();
 
-            System.out.print("DB Prepared");
+            System.out.print("DB Table Created");
 
         } catch (SQLException e)
         {
@@ -163,5 +163,7 @@ public class SqLiteJDBC
         {
             e.printStackTrace();
         }
+
+        System.out.print("DB Table filled with data");
     }
 }
