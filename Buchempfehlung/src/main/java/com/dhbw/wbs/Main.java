@@ -18,6 +18,11 @@ public class Main
             }
             else if (args[0].equalsIgnoreCase("recommend"))
             {
+                if(!sqlite.testTableExists())
+                {
+                    System.out.println("ERROR: Failed to retrieve test data. Do DB and table 'test' exist?");
+                    System.exit(2);
+                }
                 String inFile = args[1];
                 String outFile;
 

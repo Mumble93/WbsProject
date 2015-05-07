@@ -29,6 +29,30 @@ public class SqLiteJDBC
         //System.out.println("Opened database successfully");
     }
 
+    public boolean testTableExists()
+    {
+        boolean tableExists = false;
+
+        //getRowCount returns -1.0 if operation fails.
+        //at minimum, test table should contain 1 entry.
+        if (getRowCount() > 0.0)
+        {
+            tableExists = true;
+        }
+
+        return tableExists;
+    }
+
+
+    /**
+     * Gets the total count of rows in the 'test' table.
+     * @return Total count of rows as double.
+     */
+    public double getRowCount()
+    {
+        return getRowCount(null, null, null);
+    }
+
 
     /**
      * Returns the number of rows that share a manifestation of an feature.
@@ -56,20 +80,25 @@ public class SqLiteJDBC
 
         try
         {
-            Statement statement = connection.createStatement();
+            StringBuilder sql = new StringBuilder().append("SELECT COUNT(*) FROM test");
 
-            String sql = String.format("SELECT COUNT(*) FROM test WHERE %s IS '%s'", column, value);
+            if (null != column && null != value)
+            {
+                sql.append(String.format(" WHERE %s IS '%s'", column, value));
+            }
 
             if (null != book)
             {
-                sql += String.format(" AND Book IS '%s'", book.getText());
+                sql.append(String.format(" AND Book IS '%s'", book.getText()));
             }
 
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             count = resultSet.getDouble(1);
 
-            statement.close();
+            preparedStatement.close();
 
         } catch (SQLException e)
         {
@@ -88,21 +117,22 @@ public class SqLiteJDBC
 
         try
         {
-            Statement statement = connection.createStatement();
+            StringBuilder sql = new StringBuilder()
+                    .append("CREATE TABLE IF NOT EXISTS TEST ")
+                    .append("(AGE   TEXT, ")
+                    .append("SEX    TEXT, ")
+                    .append("MARRIED TEXT, ")
+                    .append("CHILDREN TEXT, ")
+                    .append("DEGREE TEXT, ")
+                    .append("OCCUPATION TEXT,")
+                    .append("SALARY TEXT, ")
+                    .append("BOOK TEXT)");
 
-            String sql = "CREATE TABLE IF NOT EXISTS TEST " +
-                    "(AGE   TEXT, " +
-                    "SEX    TEXT, " +
-                    "MARRIED TEXT, " +
-                    "CHILDREN TEXT, " +
-                    "DEGREE TEXT, " +
-                    "OCCUPATION TEXT," +
-                    "SALARY TEXT, " +
-                    "BOOK TEXT)";
-            statement.executeUpdate(sql);
-            statement.close();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
 
-            System.out.print("DB Table Created");
+            System.out.println("DB Table Created");
 
         } catch (SQLException e)
         {
@@ -116,8 +146,9 @@ public class SqLiteJDBC
      */
     public void createTestTableData(String pathToCsv)
     {
-        String sql = "INSERT INTO TEST (AGE,SEX,MARRIED,CHILDREN,DEGREE,OCCUPATION,SALARY,BOOK) " +
-                "VALUES (";
+        //wipe table of existing data
+        clearTestTable();
+
         try
         {
             BufferedReader reader = new BufferedReader(new FileReader(pathToCsv));
@@ -126,7 +157,10 @@ public class SqLiteJDBC
 
             while ((line = reader.readLine()) != null)
             {
-                if (line.equals("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen;Buch"))
+                StringBuilder sql = new StringBuilder().append("INSERT INTO TEST (AGE,SEX,MARRIED,CHILDREN,DEGREE,OCCUPATION,SALARY,BOOK) " +
+                                                                       "VALUES (");
+
+               if (line.equals("Altersgruppe;Geschlecht;Verheiratet;Kinderzahl;Abschluss;Beruf;Familieneinkommen;Buch"))
                 {
                     // Ignore header
                     continue;
@@ -134,25 +168,22 @@ public class SqLiteJDBC
 
                 entry = line.split(";");
 
-                StringBuilder builder = new StringBuilder();
-                builder.append(sql);
-
                 for (int i = 0; i < entry.length; i++)
                 {
-                    builder.append("'").append(entry[i]).append("'");
+                    sql.append("'").append(entry[i]).append("'");
                     if (i != entry.length - 1)
                     {
-                        builder.append(", ");
+                        sql.append(", ");
                     }
                 }
 
-                builder.append(");");
+                sql.append(");");
 
                 try
                 {
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(builder.toString());
-                    statement.close();
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
                 } catch (SQLException e)
                 {
                     e.printStackTrace();
@@ -164,6 +195,27 @@ public class SqLiteJDBC
             e.printStackTrace();
         }
 
-        System.out.print("DB Table filled with data");
+        System.out.println("DB Table filled with data");
+    }
+
+
+    /**
+     * Clears all entries from table 'test'.
+     */
+    public void clearTestTable()
+    {
+        try
+        {
+            String sql ="DELETE FROM test";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println("Test Data has been wiped!");
     }
 }
