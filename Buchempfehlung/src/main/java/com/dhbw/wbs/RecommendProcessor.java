@@ -144,49 +144,49 @@ public class RecommendProcessor
         if (!data[++i].isEmpty())
         {
             curEnum = Age.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Geschlecht
         if (!data[++i].isEmpty())
         {
             curEnum = Sex.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Verheiratet
         if (!data[++i].isEmpty())
         {
             curEnum = Married.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Kinderzahl
         if (!data[++i].isEmpty())
         {
             curEnum = Children.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Abschluss
         if (!data[++i].isEmpty())
         {
             curEnum = Degree.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Beruf
         if (!data[++i].isEmpty())
         {
             curEnum = Occupation.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         //Einkommen
         if (!data[++i].isEmpty())
         {
             curEnum = Salary.fromString(data[i]);
-            AddMeasureIfValid(measures, curEnum, data[i]);
+            addMeasureIfValid(measures, curEnum, data[i]);
         }
 
         return measures;
@@ -200,7 +200,7 @@ public class RecommendProcessor
      * @param curEnum      Search measure for this enum.
      * @param originalEnum String which was parsed to curEnum. Used for error message.
      */
-    private void AddMeasureIfValid(List<BaseMeasure<Book>> measures, Enum curEnum, String originalEnum)
+    private void addMeasureIfValid(List<BaseMeasure<Book>> measures, Enum curEnum, String originalEnum)
     {
         if (curEnum != null)
         {
